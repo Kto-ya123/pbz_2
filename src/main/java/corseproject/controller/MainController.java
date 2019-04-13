@@ -21,6 +21,7 @@ public class MainController {
     public String main(@RequestParam(required = false) String filter,  Model model){
         Iterable<Message> messages = messageRepository.findAll();
 
+
         if(filter != null && !filter.isEmpty()){
             messages = messageRepository.findByTag(filter);
         }else{

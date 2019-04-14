@@ -106,40 +106,7 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         </form>
 
-        <a href="#join_form" id="join_pop">Sign Up</a>
+        <a href="/reg" id="join_pop">Sign Up</a>
         <a class="close" href="#close"></a>
     </div>
-
-    <!--   ==========        РЕГИСТРАЦИЯ     ==========          -->
-    <a href="#x" class="overlay" id="join_form"></a>
-    <div class="bg-white border-bottom shadow-sm popup sign">
-        <h2>Sign Up</h2>
-        <p>Please enter your details here</p>
-        <p><#if errormessage??>${errormessage}</#if></p>
-        <form action="/#join_form" method="post">
-            <div>
-                <label for="login">Login</label>
-                <input class="form-control searchcolor" type="text" id="email" value="" name="username" />
-            </div>
-            <div>
-                <label for="email">Email</label>
-                <input class="form-control searchcolor" type="password" id="pass" name="email" />
-            </div>
-            <div>
-                <label for="pass">Password</label>
-                <input class="form-control searchcolor"  type="text" id="firstname" value="" name="password" />
-            </div>
-            <div>
-                <label for="lastname">Password</label>
-                <input class="form-control searchcolor" type="text" id="lastname" value="" name="passwordrepeat" />
-            </div>
-            <input class="btn btn-outline-primary" type="submit" value="Sign Up" />&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;<a href="#login_form" id="login_pop">Log In</a>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        </form>
-        <a class="close" href="#close"></a>
-    </div>
-
-
-
-
 </@c.page>

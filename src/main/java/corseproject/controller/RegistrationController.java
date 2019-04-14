@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
-import java.util.Map;
 
 
 @Controller
@@ -20,58 +19,37 @@ public class RegistrationController {
     private UserRepository userRepository;
 
     @GetMapping("/registration")
-    public String registration(){
+    public String reg(){
         return "registration";
     }
 
-    @GetMapping("/reg")
-    public String reg(){
-        return "reg";
-    }
-
-    @PostMapping("/reg")
-    public String addUse(@RequestParam() String password, @RequestParam String passwordrepeat,
-                          @RequestParam() String email,  User user, Model model){
-        User userFromDb = userRepository.findByUsername(user.getUsername());
-
-        if(userFromDb != null){
-            model.addAttribute("errormessage", "User exists!");
-            return"reg";
-        }
-        if(!password.equals(passwordrepeat)){
-            model.addAttribute("errormessage", "passwords don't equal");
-            return "reg";
-        }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
-
-        return "redirect:/#login_form";
-    }
-
     @PostMapping("/registration")
-    public String addUser(@RequestParam() String password, @RequestParam String passwordrepeat,
-                          @RequestParam() String email,  User user, Model model){
+    public String addUse(@RequestParam String passwordrepeat, User user, Model model){
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
         if(userFromDb != null){
             model.addAttribute("errormessage", "User exists!");
-            return"registration";
+            return "registration";
         }
-        if(password != passwordrepeat){
+        if(!user.getPassword().equals(passwordrepeat)){
             model.addAttribute("errormessage", "passwords don't equal");
             return "registration";
         }
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }catch (Exception e){
+            model.addAttribute("errormessage", "check entered data");
+            return "registration";
+        }
 
         return "redirect:/#login_form";
     }
-    /*@GetMapping("/error")
+
+    @GetMapping("/error")
     public String error(){
         return "redirect:/";
-    }*/
+    }
 }

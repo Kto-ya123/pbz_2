@@ -106,7 +106,7 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         </form>
 
-        <a href="/reg" id="join_pop">Sign Up</a>
+        <a href="/registration" id="join_pop">Sign Up</a>
         <a class="close" href="#close"></a>
     </div>
 </@c.page>

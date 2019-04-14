@@ -27,7 +27,6 @@ public class MainController {
         }else{
             messages = messageRepository.findAll();
         }
-
         model.addAttribute("messages", messages);
         model.addAttribute("filter", filter);
         return "main";
@@ -51,9 +50,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public  String greeting(Map<String, Object> model){
+    public  String greeting(Model model){
         return "greeting";
     }
-
-
 }

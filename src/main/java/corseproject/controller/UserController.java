@@ -54,5 +54,12 @@ public class UserController {
         return "redirect:user";
 
     }
+    @PostMapping("/delete")
+    public String userDelete(@RequestParam("userId") User user){
+
+        userRepository.delete(user);
+        return "redirect:user";
+
+    }
 
 }

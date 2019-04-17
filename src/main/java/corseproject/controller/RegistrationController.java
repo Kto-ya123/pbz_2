@@ -47,9 +47,9 @@ public class RegistrationController {
 
         return "redirect:/#login_form";
     }
-
+    /*
     @GetMapping("/error")
     public String error(){
         return "redirect:/";
-    }
+    }*/
 }

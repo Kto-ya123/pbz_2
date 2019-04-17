@@ -12,4 +12,7 @@
         <button type="submit">Save</button>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
+    <form action="/user/delete" method="post">
+        <button type="submit">Delete</button>
+    </form>
 </@c.page>

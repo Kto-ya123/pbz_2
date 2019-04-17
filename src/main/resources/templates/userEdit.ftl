@@ -13,6 +13,8 @@
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
     <form action="/user/delete" method="post">
+        <input type="hidden" value="${user.id}" name="userId"/>
         <button type="submit">Delete</button>
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
 </@c.page>

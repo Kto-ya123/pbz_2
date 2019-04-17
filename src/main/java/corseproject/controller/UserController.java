@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-@PreAuthorize("hasAuthority('ADMIN')")
+//@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -37,6 +37,7 @@ public class UserController {
             @RequestParam String username,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user){
+
         user.setUsername(username);
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)

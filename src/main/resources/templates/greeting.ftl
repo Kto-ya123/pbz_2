@@ -51,9 +51,11 @@
 
     <div class="container ">
         <div class="row">
-            <div class="col">
-                <div class="col d-flex flex-column  align-items-center  border-bottom shadow-sm border" >
-                    <img class="d-block w-100" src="style/main1.png" >
+            <div class="col hover ">
+                <div  class=" col d-flex flex-column  align-items-center  border-bottom shadow-sm border" >
+                    <a href="/">
+                        <img class="d-block w-100" src="style/main1.png" >
+                    </a>
                     <h5>Price</h5>
                     <button class="btn btn-outline-primary margin" type="button">Buy</button>
                 </div>
@@ -104,9 +106,9 @@
             </div>
             <input type="submit" class="btn btn-outline-primary" value="Sign In" />
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            &nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;
+        <a href="/registration" id="join_pop" >Sign Up</a>
         </form>
-
-        <a href="/registration" id="join_pop">Sign Up</a>
         <a class="close" href="#close"></a>
     </div>
 </@c.page>

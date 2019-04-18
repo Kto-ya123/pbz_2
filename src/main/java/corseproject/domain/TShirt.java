@@ -1,5 +1,4 @@
 package corseproject.domain;
-
 import javax.persistence.*;
 
 @Entity

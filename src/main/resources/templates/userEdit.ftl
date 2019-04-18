@@ -25,7 +25,7 @@
         <button class="btn btn-outline-primary" style="width: 100px;" type="submit">Delete</button>
         <input  type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
-        <form action="/user/delete" method="post">
+        <form action="/user/block" method="post">
             <br>
             <input type="hidden" value="${user.id}" name="userId"/>
             <button class="btn btn-outline-primary" style="width: 100px;" type="submit">Block</button>

@@ -1,20 +1,38 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/login.ftl" as l>
 <@c.page>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 container bg-white border-bottom shadow-sm border">
+
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm border">
         <nav class="col-sm ">
             <a class="p-2 text-dark" href="#">T-shirts</a>
             <a class="p-2 text-dark" href="#">Woman</a>
             <a class="p-2 text-dark" href="#">Man</a>
         </nav>
+        <#if logIn??>
+        <div class="btn-group my-2 my-md-0 mr-md-3">
+            <button type="button" onclick="location.href= '/mypage'" class="btn btn-outline-primary">${user.username}</button>
+            <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only ">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu ">
+                <a class="dropdown-item " href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                        <input class="btn col-3" type="submit" value="Sign Out"/>
+                    </form>
+            </div>
+        </div>
+        <#else>
         <nav class="my-2 my-md-0 mr-md-3">
-            <#if logIn??>
-                <a class="btn btn-outline-primary" href="/mypage/${user.id}" id="join_pop">${username}</a>
-                <#else >
-                <a class="btn btn-outline-primary" href="#login_form" id="join_pop">Log In</a>
-            </#if>
-
+            <a class="btn btn-outline-primary" href="#login_form" id="join_pop">Log In</a>
         </nav>
+        </#if>
+
+
         <nav class="my-2 my-md-0 mr-md-3">
             <div class="input-group ">
                 <input type="text" class="form-control searchcolor" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">

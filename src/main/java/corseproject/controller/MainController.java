@@ -100,7 +100,6 @@ public class MainController {
                             @AuthenticationPrincipal User user){
         if(user != null){
             model.addAttribute("logIn", "1");
-            model.addAttribute("username", user.getUsername());
             model.addAttribute("user", user);
         }
         return "greeting";

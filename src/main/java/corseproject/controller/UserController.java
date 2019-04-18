@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
-//@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -34,11 +34,9 @@ public class UserController {
     }
     @PostMapping
     public String userSave(
-            @RequestParam String username,
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user){
 
-        user.setUsername(username);
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
                 .collect(Collectors.toSet());
@@ -56,7 +54,6 @@ public class UserController {
     }
     @PostMapping("delete")
     public String userDelete(@RequestParam("userId") User user){
-
         userRepository.delete(user);
         return "redirect:";
 

@@ -8,7 +8,12 @@
             <a class="p-2 text-dark" href="#">Man</a>
         </nav>
         <nav class="my-2 my-md-0 mr-md-3">
-            <a class="btn btn-outline-primary" href="#login_form" id="join_pop">Log In</a>
+            <#if logIn??>
+                <a class="btn btn-outline-primary" href="/mypage/${user.id}" id="join_pop">${username}</a>
+                <#else >
+                <a class="btn btn-outline-primary" href="#login_form" id="join_pop">Log In</a>
+            </#if>
+
         </nav>
         <nav class="my-2 my-md-0 mr-md-3">
             <div class="input-group ">

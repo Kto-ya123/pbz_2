@@ -2,7 +2,7 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
     <div class="container shadow-sm col-3 p-3 mb-3" style="margin: 20px auto;">
-        <div class=" sign" style="margin: 20px auto;">
+        <div>
             <h2>Sign Up</h2>
             <p>Please enter your details here</p>
             <p><#if errormessage??>${errormessage}</#if></p>

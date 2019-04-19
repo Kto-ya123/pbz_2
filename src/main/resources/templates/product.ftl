@@ -81,15 +81,12 @@
 </#list>
 
 
-
-
-
     <div id="printBlock" class="mb-3">
 
     </div>
 
 
-    <form action="/mypage/add" method="post">
+    <form action="/TShirts/addComment" method="post">
         <div class="container shadow-sm col-9 p-3 mb-3 "	>
             <div class="input-group">
                 <input  type="hidden" name="_csrf" value="${_csrf.token}"/>

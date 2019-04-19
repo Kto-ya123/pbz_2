@@ -3,13 +3,12 @@ package corseproject.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import corseproject.domain.Comment;
-import corseproject.domain.Message;
+import corseproject.domain.Role;
 import corseproject.domain.TShirt;
 import corseproject.domain.User;
 import corseproject.repos.CommentRepository;
 import corseproject.repos.TShirtRepository;
 import corseproject.repos.UserRepository;
-import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,18 +17,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Size;
+import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
-@RequestMapping("/mypage")
+@RequestMapping("/{username}")
 public class PersonalPageController {
-    //@Autowired
-    //private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private TShirtRepository tShirtRepository;
     @Autowired
@@ -37,46 +35,30 @@ public class PersonalPageController {
 
     @Value("${upload.path}")
     private String uploadPath;
+
     @Value("${cloudinary.path}")
     private String cloudinaryPath;
-    @GetMapping("{tShirt}")
-    public String style(@PathVariable TShirt tShirt, Model model){
-        List<Comment> comments = commentRepository.findByTShirt(tShirt);
-        model.addAttribute("tShirt", tShirt);
-        model.addAttribute("comments", comments);
-        return "product";
-    }
-
-    @PostMapping("add")
-    public String addComment(
-            @RequestParam("tShirtId") TShirt tShirt,
-            @RequestParam String text,
-            @AuthenticationPrincipal User user){
-
-        Comment comment = new Comment();
-        comment.settShirt(tShirt);
-        comment.setAuthor(user);
-        comment.setMessage(text);
-        commentRepository.save(comment);
-
-        return "redirect:/mypage/"+tShirt.getId();
-
-    }
 
     @GetMapping()
-    public String personalPage(Model model, @AuthenticationPrincipal User user){
-        if(user == null){
+    public String personalPage(Model model,
+                               @AuthenticationPrincipal User authUser,
+                               @PathVariable String username){
+        User user = userRepository.findByUsername(username);
+        if(!authUser.getUsername().equals(user.getUsername())
+        && !authUser.getRoles().contains(Role.ADMIN) ){
             return "redirect:/";
         }
 
         List<TShirt> tShirts =  tShirtRepository.findByAuthor(user);
         model.addAttribute("tShirts", tShirts);
-        return "personal";
+        return "mypage";
     }
+
     @PostMapping()
-    public String addStyle(@AuthenticationPrincipal User user,
+    public String addStyle(@PathVariable String username,
                             @RequestParam("file") MultipartFile file,
                             Model model) throws IOException {
+        User user = userRepository.findByUsername(username);
         if (file != null) {
             File uploadDir = new File(uploadPath);
 
@@ -91,6 +73,7 @@ public class PersonalPageController {
                     "api_key", "224226883725776",
                     "api_secret", "b1t0r9MrMI4YHq5oeCQs3avCsq4"));
             Map uploadRezult = cloudinary.uploader().upload(uploadFile, ObjectUtils.emptyMap());
+            //Map uploadRezult = cloudinary.uploader().upload(, ObjectUtils.emptyMap());
 
             TShirt tShirt = new TShirt();
             tShirt.setAuthor(user);
@@ -104,6 +87,6 @@ public class PersonalPageController {
             List<TShirt> tShirts =  tShirtRepository.findByAuthor(user);
             model.addAttribute("tShirts", tShirts);
         }
-        return "personal";
+        return "mypage";
     }
 }

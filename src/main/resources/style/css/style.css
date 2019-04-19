@@ -23,6 +23,11 @@
 
 
 }
+.size{
+    width: 260px;
+    height: 360px;
+    margin-top:50px;
+}
 
 .hover:hover{
     -webkit-transform: scale(1.2);

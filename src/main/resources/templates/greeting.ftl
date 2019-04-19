@@ -11,7 +11,7 @@
         </nav>
         <#if logIn??>
         <div class="btn-group my-2 my-md-0 mr-md-3">
-            <button type="button" onclick="location.href= '/mypage'" class="btn btn-outline-primary">${user.username}</button>
+            <button type="button" onclick="location.href= '/${user.username}'" class="btn btn-outline-primary">${user.username}</button>
             <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="sr-only ">Toggle Dropdown</span>
             </button>

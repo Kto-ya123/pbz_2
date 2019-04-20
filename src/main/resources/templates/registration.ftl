@@ -1,6 +1,7 @@
 
 <#import "parts/common.ftl" as c>
-<@c.page>
+<#if user??><#assign login = true></#if>
+<@c.page login!false user!false>
     <div class="container shadow-sm col-3 p-3 mb-3" style="margin: 20px auto;">
         <div>
             <h2>Sign Up</h2>

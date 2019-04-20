@@ -51,13 +51,15 @@ public class PersonalPageController {
 
         List<TShirt> tShirts =  tShirtRepository.findByAuthor(user);
         model.addAttribute("tShirts", tShirts);
+        model.addAttribute("user", authUser);
         return "mypage";
     }
 
     @PostMapping()
-    public String addStyle(@PathVariable String username,
-                            @RequestParam("file") MultipartFile file,
-                            Model model) throws IOException {
+    public String addStyle(@AuthenticationPrincipal User authUser,
+                           @PathVariable String username,
+                           @RequestParam("file") MultipartFile file,
+                           Model model) throws IOException {
         User user = userRepository.findByUsername(username);
         if (file != null) {
             File uploadDir = new File(uploadPath);
@@ -84,9 +86,7 @@ public class PersonalPageController {
             }catch (Exception e){
                 model.addAttribute("message", e.getMessage());
             }
-            List<TShirt> tShirts =  tShirtRepository.findByAuthor(user);
-            model.addAttribute("tShirts", tShirts);
         }
-        return "mypage";
+        return "redirect:/"+user.getUsername();
     }
 }

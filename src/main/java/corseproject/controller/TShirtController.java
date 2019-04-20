@@ -19,10 +19,12 @@ public class TShirtController {
     private CommentRepository commentRepository;
 
     @GetMapping("/{tShirt}")
-    public String style(@PathVariable TShirt tShirt, Model model){
+    public String style(@AuthenticationPrincipal User authUser,
+                        @PathVariable TShirt tShirt, Model model){
         List<Comment> comments = commentRepository.findByTShirt(tShirt);
         model.addAttribute("tShirt", tShirt);
         model.addAttribute("comments", comments);
+        model.addAttribute("user", authUser);
         return "product";
     }
 

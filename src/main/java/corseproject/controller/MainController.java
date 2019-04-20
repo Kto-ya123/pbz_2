@@ -99,7 +99,6 @@ public class MainController {
     public  String greeting(Model model,
                             @AuthenticationPrincipal User user){
         if(user != null){
-            model.addAttribute("logIn", "1");
             model.addAttribute("user", user);
         }
         return "greeting";

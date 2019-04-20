@@ -1,5 +1,6 @@
 <#import "parts/common.ftl" as c>
-<@c.page>
+<#import "parts/justPage.ftl" as j>
+<@j.page>
 
     <div class="d-flex flex-column flex-md-row align-items-center col-9  p-3 mb-3  container bg-white border-bottom shadow-sm border">
 
@@ -26,4 +27,4 @@
     </tbody>
 </table>
     </div>
-</@c.page>
+</@j.page>

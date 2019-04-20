@@ -1,5 +1,6 @@
 <#import "parts/common.ftl" as c>
-<@c.page>
+<#import "parts/justPage.ftl" as j>
+<@j.page>
 
     <div class="container shadow-sm col-2 p-3 mb-3" style="margin: 20px auto;">
     <div>
@@ -31,7 +32,8 @@
             <button class="btn btn-outline-primary" style="width: 100px;" type="submit">Block</button>
             <input  type="hidden" name="_csrf" value="${_csrf.token}"/>
         </form>
-
+        <br>
+        <button class="btn btn-outline-primary" onclick="location.href= '/${user.username}'"  style="width: 100px;" type="Button">ToPage</button>
         </div>
     </div>
-</@c.page>
+</@j.page>

@@ -71,6 +71,4 @@
       <input type="hidden" name="_csrf" value="${_csrf.token}"/>
       <button type="submit">Добавить</button>
   </form>
-
-<div class="null"></div>
   </@c.page>

@@ -1,6 +1,7 @@
-<#import "parts/common.ftl" as c>
+<#import "parts/justPage.ftl" as j>
 <#import  "parts/login.ftl" as l>
-<@c.page>
+<#import  "parts/login.ftl" as l>
+<@j.page>
     <div>
         ${string?if_exists}
     </div>
@@ -38,4 +39,4 @@
     <#else>
     No messages
 </#list>
-</@c.page>
+</@j.page>

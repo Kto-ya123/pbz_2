@@ -67,30 +67,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-    <!--   ==========         ЛОГИН     ==========          -->
-    <a href="#x" class="overlay" id="login_form"></a>
-    <div class="bg-white border-bottom shadow-sm popup">
-        <h2>Welcome </h2>
-        <p>Please enter your login and password here</p>
-        <form method="post" action="/">
-            <div>
-                <label for="login" >Login:</label>
-                <input class="form-control searchcolor" type="text" id="login" value="" name="username" />
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input class="form-control searchcolor" type="password" id="password" value="" name="password" />
-            </div>
-            <input type="submit" class="btn btn-outline-primary" value="Sign In" />
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            &nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;
-        <a href="/registration" id="join_pop" >Sign Up</a>
-        </form>
-        <a class="close" href="#close"></a>
-    </div>
 </@c.page>

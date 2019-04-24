@@ -90,7 +90,7 @@
 
 
 
-    <script>
+   <!--<script>
         function printForm(e){
 
             var keyBox = document.search.key;
@@ -113,7 +113,7 @@
 
         var printButton = document.search.print;
         printButton.addEventListener("click", printForm);
-    </script>
+    </script>-->
 
 
 

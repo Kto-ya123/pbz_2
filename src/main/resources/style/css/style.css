@@ -1,4 +1,41 @@
 
+[type="file"] {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+}
+
+[type="file"] + label {
+
+
+    margin-top: 8px;
+
+    cursor: pointer;
+
+
+
+}
+
+
+
+
+
+.basket{
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    width: 300px;
+
+}
+
+.size{
+    width: 260px;
+    height: 360px;
+
+    margin-top:50px;
+
+
+}
 
 
 

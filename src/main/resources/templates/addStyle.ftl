@@ -128,6 +128,7 @@
         var svg = canvas.toSVG();
         document.write('<form method="post" action="/TShirts/add">');
         document.write(" <input type='hidden' name='svg' value='"+ svg +"'/>");
+        document.write(" <input type='hidden' name='username' value='${userpage.username}'/>");
         document.write('<input type="hidden" name="_csrf" value="${_csrf.token}"/>');
         document.write('<h1>Загрузка...</h1>');
         document.write(' <button type="submit"  id  = "to_svg" style="display:none;"></button>');

@@ -45,48 +45,14 @@ public class PersonalPageController {
                                @PathVariable String username){
         User user = userRepository.findByUsername(username);
         if(!authUser.getUsername().equals(user.getUsername())
-        && !authUser.getRoles().contains(Role.ADMIN) ){
+        && !authUser.getRoles().contains(Role.ADMIN)){
             return "redirect:/";
         }
 
         List<TShirt> tShirts =  tShirtRepository.findByAuthor(user);
         model.addAttribute("tShirts", tShirts);
         model.addAttribute("user", authUser);
+        model.addAttribute("userpage", user);
         return "mypage";
-    }
-
-    @PostMapping()
-    public String addStyle(@AuthenticationPrincipal User authUser,
-                           @PathVariable String username,
-                           @RequestParam("file") MultipartFile file,
-                           Model model) throws IOException {
-        User user = userRepository.findByUsername(username);
-        if (file != null) {
-            File uploadDir = new File(uploadPath);
-
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-            file.transferTo(new File(uploadPath + "/" + file.getOriginalFilename()));
-            File uploadFile = new File(uploadPath + "/" + file.getOriginalFilename());
-
-            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                    "cloud_name", "itr",
-                    "api_key", "224226883725776",
-                    "api_secret", "b1t0r9MrMI4YHq5oeCQs3avCsq4"));
-            Map uploadRezult = cloudinary.uploader().upload(uploadFile, ObjectUtils.emptyMap());
-            //Map uploadRezult = cloudinary.uploader().upload(, ObjectUtils.emptyMap());
-
-            TShirt tShirt = new TShirt();
-            tShirt.setAuthor(user);
-            tShirt.setUrlShirt(uploadRezult.get("secure_url").toString());
-
-            try {
-                tShirtRepository.save(tShirt);
-            }catch (Exception e){
-                model.addAttribute("message", e.getMessage());
-            }
-        }
-        return "redirect:/"+user.getUsername();
     }
 }

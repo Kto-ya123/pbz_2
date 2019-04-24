@@ -8,7 +8,7 @@
     <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm border">
         <nav class="col-sm ">
-            <a class="p-2 text-dark" href="#">T-shirts</a>
+            <a class="p-2 text-dark" href="/TShirts">T-shirts</a>
             <a class="p-2 text-dark" href="#">Woman</a>
             <a class="p-2 text-dark" href="#">Man</a>
         </nav>
@@ -22,11 +22,8 @@
                     <a class="dropdown-item " href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" onclick="signOut();">Sign out</a>
                     <div class="dropdown-divider"></div>
-                    <form action="/logout" method="post">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                        <input class="btn col-3" type="submit" value="Sign Out"/>
-                    </form>
                 </div>
             </div>
         <#else>
@@ -72,5 +69,16 @@
     <#nested>
     </body>
     <div class="null"></div>
+
 </html>
+    <script>
+        function signOut(){
+            document.write('<form action="/logout" method="post">');
+            document.write('<input type="hidden" name="_csrf" value="${_csrf.token}"/>');
+            document.write('<input style="display:none;" type="submit" id="signout"/>');
+            document.write('</form>');
+            var button = document.getElementById('signout');
+            button.click();
+        }
+    </script>
 </#macro>

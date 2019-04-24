@@ -37,35 +37,23 @@
 
     <h3 class="container md-2">Comments</h3>
 
-
-    <div class="container shadow-sm col-9 p-3 mb-3 comments ">
-        <ul class="">
-            <li class="media">
-                <div class="line">Name:</div>
-                <div><br><span>Each year fewer people speak English as their mother tongue — but more people speak it as a second or foreign language. In 1950 nearly 9% of the world’s population spoke English as their first language.</span>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-<#list comments as comment>
-    <div class="container shadow-sm col-9 p-3 mb-3 comments">
-        <ul class="">
-            <li class="media">
-                <div class="line" >${comment.author.username}</div>
-                <div><br><span>${comment.message}</span>
-                </div>
-            </li>
-        </ul>
-    </div>
-</#list>
-
+    <#list comments as comment>
+        <div class="container shadow-sm col-9 p-3 mb-3 comments">
+            <ul class="">
+                <li class="media">
+                    <div class="line" >${comment.author.username}</div>
+                    <div><br><span>${comment.message}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </#list>
 
     <div id="printBlock" class="mb-3">
 
     </div>
 
-
+ <#if user??>
     <form action="/TShirts/addComment" method="post">
         <div class="container shadow-sm col-9 p-3 mb-3 "	>
             <div class="input-group">
@@ -78,6 +66,7 @@
             </div>
         </div>
     </form>
+ </#if>
 
 
     <div class="null"></div>

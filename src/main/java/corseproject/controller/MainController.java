@@ -75,8 +75,6 @@ public class MainController {
                     "api_key","224226883725776",
                     "api_secret", "b1t0r9MrMI4YHq5oeCQs3avCsq4"));
             Map uploadRezult = cloudinary.uploader().upload(uploadFile, ObjectUtils.emptyMap());
-            //Map uploadRezult2 = cloudinary.uploader().upload("localhost:8080/img/image.png", ObjectUtils.emptyMap());
-            uploadRezult.toString();
             model.put("string", uploadRezult.get("secure_url").toString());
 
 
@@ -98,6 +96,7 @@ public class MainController {
     @GetMapping("/")
     public  String greeting(Model model,
                             @AuthenticationPrincipal User user){
+
         if(user != null){
             model.addAttribute("user", user);
         }

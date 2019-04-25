@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,9 @@ public class TShirtController {
     @GetMapping()
     public String allStyle(@AuthenticationPrincipal User authUser,
                              Model model){
+
         Iterable<TShirt> tShirts = tShirtRepository.findAll();
+
         model.addAttribute("user", authUser);
         model.addAttribute("tShirts", tShirts);
 

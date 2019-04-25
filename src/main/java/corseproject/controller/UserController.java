@@ -59,4 +59,12 @@ public class UserController {
 
     }
 
+    @PostMapping("block")
+    public String userBlock(@RequestParam("userId") User user){
+        user.setActive(false);
+        userRepository.save(user);
+        return "redirect:";
+
+    }
+
 }

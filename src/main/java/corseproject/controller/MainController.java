@@ -4,6 +4,7 @@ import com.cloudinary.utils.ObjectUtils;
 import corseproject.domain.Message;
 import corseproject.domain.User;
 import corseproject.repos.MessageRepository;
+import corseproject.repos.TShirtRepository;
 import corseproject.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,8 @@ public class MainController {
     private MessageRepository messageRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TShirtRepository tShirtRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -79,9 +82,6 @@ public class MainController {
 
 
         }
-
-
-
         message.setText(text);
         message.setTag(tag);
         message.setAuthor(user);
@@ -96,7 +96,6 @@ public class MainController {
     @GetMapping("/")
     public  String greeting(Model model,
                             @AuthenticationPrincipal User user){
-
         if(user != null){
             model.addAttribute("user", user);
         }

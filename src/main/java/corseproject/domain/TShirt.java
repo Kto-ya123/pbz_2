@@ -1,18 +1,52 @@
 package corseproject.domain;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 @Entity
 @Table(name = "tshirt")
 public class TShirt {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+
+    @NotEmpty
+    private String name;
+
+    private String description;
 
     private String urlShirt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tag_id")
+    Set<Tag> tags;
+
+    @NotEmpty
+    private Sex sex;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
 
     public User getAuthor() {
         return author;

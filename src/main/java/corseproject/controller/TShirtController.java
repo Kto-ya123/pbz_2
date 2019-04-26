@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +56,7 @@ public class TShirtController {
         return "product";
     }
 
+
     @GetMapping("/add")
     public String addStyle(@AuthenticationPrincipal User authUser,
                            @RequestParam String username,
@@ -70,6 +70,14 @@ public class TShirtController {
         model.addAttribute("userpage", user);
 
         return "addStyle";
+    }
+
+    @GetMapping("/create")
+    public String createStyle(@AuthenticationPrincipal User authUser,
+                           Model model){
+
+        model.addAttribute("user", authUser);
+        return "create";
     }
 
     @PostMapping("/add")
@@ -98,6 +106,7 @@ public class TShirtController {
 
         return "redirect:/"+user.getUsername();
     }
+
 
     @PostMapping("addComment")
     public String addComment(

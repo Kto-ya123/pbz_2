@@ -1,7 +1,9 @@
 package corseproject.controller;
 
 import corseproject.domain.Role;
+import corseproject.domain.TShirt;
 import corseproject.domain.User;
+import corseproject.repos.TShirtRepository;
 import corseproject.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +23,8 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private TShirtRepository tShirtRepository;
     @GetMapping
     public String userList(Model model){
         model.addAttribute("users", userRepository.findAll());
@@ -54,6 +58,14 @@ public class UserController {
     }
     @PostMapping("delete")
     public String userDelete(@RequestParam("userId") User user){
+
+        List<TShirt> tShirts = tShirtRepository.findByAuthor(user);
+        User admin = userRepository.findByUsername("admin");
+        for (TShirt tShirt: tShirts) {
+            tShirt.setAuthor(admin);
+            tShirtRepository.save(tShirt);
+
+        }
         userRepository.delete(user);
         return "redirect:";
 

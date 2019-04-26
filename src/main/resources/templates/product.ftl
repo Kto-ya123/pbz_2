@@ -11,7 +11,11 @@
             </div>
             <div class="сontainer col-6 text-right " >
                 <h3 class="display-4">Product name</h3>
-                <h4 class="mb-5 line" >$18</h4>
+                <h4 class="mb-5 line" >Name:${tShirt.name}</h4>
+                <h4 class="mb-5 line" >Description:${tShirt.description}</h4>
+                <h4 class="mb-5 line" >Sex:${tShirt.sex}</h4>
+                <h4 class="mb-5 line" >Id:${tShirt.id}</h4>
+
                     Size<br>
                     <select class="custom-select searchcolor  mb-3" style="width: 200px">
                         <option selected>M</option>

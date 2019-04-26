@@ -9,6 +9,7 @@ import corseproject.domain.User;
 import corseproject.repos.CommentRepository;
 import corseproject.repos.TShirtRepository;
 import corseproject.repos.UserRepository;
+import corseproject.service.TShirtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,9 +31,8 @@ public class TShirtController {
     private UserRepository userRepository;
     @Autowired
     private TShirtRepository tShirtRepository;
-
-    @Value("${upload.path}")
-    private String uploadPath;
+    @Autowired
+    private TShirtService tShirtService;
 
     @GetMapping()
     public String allStyle(@AuthenticationPrincipal User authUser,
@@ -69,42 +69,26 @@ public class TShirtController {
         model.addAttribute("user", authUser);
         model.addAttribute("userpage", user);
 
-        return "addStyle";
-    }
-
-    @GetMapping("/create")
-    public String createStyle(@AuthenticationPrincipal User authUser,
-                           Model model){
-
-        model.addAttribute("user", authUser);
         return "create";
     }
 
     @PostMapping("/add")
-    public String addShirt(@RequestParam String svg,
-                          @AuthenticationPrincipal User authUser,
+    public String addShirt(@AuthenticationPrincipal User authUser,
+                          @RequestParam String svg,
                           @RequestParam String username,
+                          @RequestParam String sex,
+                          @RequestParam String nameProduct,
+                          @RequestParam String topic,
+                          @RequestParam String discription,
                           Model model) throws IOException {
-        User user = userRepository.findByUsername(username);
-        FileWriter writer = new FileWriter(uploadPath + "/file.png", false);
-        writer.append(svg);
-        writer.flush();
+        boolean addition =  tShirtService.addTShirt(username, svg, sex, nameProduct, topic, discription);
 
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name","itr",
-                "api_key","224226883725776",
-                "api_secret", "b1t0r9MrMI4YHq5oeCQs3avCsq4"));
-        Map uploadRezult = cloudinary.uploader().upload(uploadPath + "/file.png", ObjectUtils.emptyMap());
-        String pathSVG = uploadRezult.get("secure_url").toString();
-        String pathPNG = pathSVG.substring(0, pathSVG.length()-3)+"png";
-        TShirt tShirt = new TShirt();
-        tShirt.setUrlShirt(pathPNG);
-        tShirt.setAuthor(user);
-        tShirtRepository.save(tShirt);
-
-        model.addAttribute("user", authUser);
-
-        return "redirect:/"+user.getUsername();
+        if(addition == true) {
+            return "redirect:/" + username;
+        }else {
+            model.addAttribute("message", "Check entered data");
+            return "redirect:/TShirts/add";
+        }
     }
 
 

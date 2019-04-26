@@ -8,25 +8,43 @@ import java.util.Set;
 public class TShirt {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @NotEmpty
     private String name;
 
+    @NotEmpty
     private String description;
 
+    @NotEmpty
     private String urlShirt;
+
+    private Sex sex;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "tag_id")
     Set<Tag> tags;
-
-    @NotEmpty
-    private Sex sex;
 
     public void setId(Long id) {
         this.id = id;

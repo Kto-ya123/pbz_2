@@ -1,4 +1,16 @@
-
+.anim{
+    -webkit-animation: pulsing 4s infinite;
+}
+@-webkit-keyframes pulsing {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    50% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(380deg);
+    }
+}
 [type="file"] {
     height: 0;
     overflow: hidden;

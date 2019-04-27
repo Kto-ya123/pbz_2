@@ -7,15 +7,15 @@
         <div class="col-6 " >
             <canvas id="canvas" width="500px" height="500px"  ></canvas>
         </div>
-
         <div class="col-6 text-right " >
             <#if message??>
                 <div style="color:red;border-color: red;width: 258px;" class="btn mb-">${message}</div>
             </#if>
+            <br>
             <select class="custom-select searchcolor  mb-3" id="topic" style="width: 258px;margin-top: 50px;">
-                <option value="0">Тема 1</option>
-                <option value="1">Тема 2</option>
-                <option value="2">Тема 3</option>
+                <#list topics as topic>
+                    <option value="${topic.topicName}">${topic.topicName}</option>
+                </#list>
             </select><br>
             <input  type="text" class="form-control searchcolor btn mb-3" id="name_product"  style="width: 258px;"placeholder="Name product"></input>
 
@@ -24,10 +24,8 @@
                 <button class="btn btn-outline-primary addField add mb-3" type="button" name="print" style="margin-right: -3px;" >Add</button>
             </form>
 
-            <div style="height: 100px;" class="inputs">
-
+            <div style="height: 100px;" class="inputs" name="tag" id="tags">
                 <div class="inputs" name="dynamic[]" class="field"></div>
-
             </div>
 
             <select id="sex" onclick="sex()"  class="custom-select searchcolor mb-3" style="width: 200px">
@@ -101,19 +99,25 @@
             '} \n' +
             '</style>';
 
-
         var nameProduct = document.getElementById('name_product').value;
         var sex = document.getElementById('sex').value;
+        var description = document.getElementById('description').value;
+        var topic = document.getElementById('topic').value;
+        var tags = "";
+        for(i = 0; i < 4; i++){
+            tags += document.getElementById('comment_data').value;
+        }
 
         var svg = canvas.toSVG();
         document.write(style);
         document.write('<form method="post" action="/TShirts/add">');
         document.write(" <input type='hidden' name='svg' value='"+ svg +"'/>");
         document.write(" <input type='hidden' name='nameProduct' value='"+ nameProduct +"'/>");
-        document.write(" <input type='hidden' name='topic' value='"+ $('#topic').val() +"'/>");
-        document.write(" <input type='hidden' name='discription' value='"+ $('#description').val() +"'/>");
+        document.write(" <input type='hidden' name='topic' value='"+ topic +"'/>");
+        document.write(" <input type='hidden' name='discription' value='"+ description +"'/>");
         document.write(" <input type='hidden' name='sex' value='"+ sex +"'/>");
-        document.write('<input type="hidden" name="username" value="${user.username}"/>');
+        document.write(" <input type='hidden' name='tags' value='"+ tags +"'/>");
+        document.write('<input type="hidden" name="username" value="${userpage}"/>');
         document.write('<input type="hidden" name="_csrf" value="${_csrf.token}"/>');
         document.write(load);
         document.write(' <button type="submit"  id  = "to_svg" style="display:none;"></button>');

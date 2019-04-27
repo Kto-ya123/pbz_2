@@ -2,14 +2,13 @@ package corseproject.controller;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import corseproject.domain.Comment;
-import corseproject.domain.Role;
-import corseproject.domain.TShirt;
-import corseproject.domain.User;
+import corseproject.domain.*;
 import corseproject.repos.CommentRepository;
 import corseproject.repos.TShirtRepository;
+import corseproject.repos.TopicRepository;
 import corseproject.repos.UserRepository;
 import corseproject.service.TShirtService;
+import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,11 +27,13 @@ public class TShirtController {
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
     private TShirtRepository tShirtRepository;
     @Autowired
     private TShirtService tShirtService;
+    @Autowired
+    private TopicRepository topicRepository;
 
     @GetMapping()
     public String allStyle(@AuthenticationPrincipal User authUser,
@@ -50,24 +51,30 @@ public class TShirtController {
     public String style(@AuthenticationPrincipal User authUser,
                         @PathVariable TShirt tShirt, Model model){
         List<Comment> comments = commentRepository.findByTShirt(tShirt);
+        if(userService.getAccess(authUser, tShirt.getAuthor().getUsername())){
+            model.addAttribute("access", 1);
+        }
         model.addAttribute("tShirt", tShirt);
         model.addAttribute("comments", comments);
         model.addAttribute("user", authUser);
-        return "product";
+        return "newproduct";
     }
 
 
     @GetMapping("/add")
     public String addStyle(@AuthenticationPrincipal User authUser,
                            @RequestParam String username,
+                           @RequestParam(required = false) String message,
                            Model model){
-        User user = userRepository.findByUsername(username);
-        if(!authUser.getUsername().equals(user.getUsername())
-                && !authUser.getRoles().contains(Role.ADMIN)){
-            return "redirect:/";
+        if(!userService.getAccess(authUser, username)){
+            return"redirect:/";
         }
+        Iterable<Topic> topics = topicRepository.findAll();
+
+        model.addAttribute("topics", topics);
         model.addAttribute("user", authUser);
-        model.addAttribute("userpage", user);
+        model.addAttribute("userpage", username);
+        model.addAttribute("message", message);
 
         return "create";
     }
@@ -80,17 +87,27 @@ public class TShirtController {
                           @RequestParam String nameProduct,
                           @RequestParam String topic,
                           @RequestParam String discription,
+                          @RequestParam String tags,
                           Model model) throws IOException {
-        boolean addition =  tShirtService.addTShirt(username, svg, sex, nameProduct, topic, discription);
+        boolean addition =  tShirtService.addTShirt(username, svg, sex, nameProduct, topic, discription, tags);
 
         if(addition == true) {
             return "redirect:/" + username;
         }else {
-            model.addAttribute("message", "Check entered data");
-            return "redirect:/TShirts/add";
+            String message = "Check your entered data";
+            return "redirect:/TShirts/add?username="+username + "&message="+message;
         }
     }
 
+    @PostMapping("/{tShirt}/delete")
+    public String deleteStyle(@AuthenticationPrincipal User authUser,
+                              @PathVariable TShirt tShirt){
+        if(userService.getAccess(authUser, tShirt.getAuthor().getUsername())){
+            tShirtRepository.delete(tShirt);
+            return "redirect:/"+tShirt.getAuthor().getUsername();
+        }
+        return "redirect:/";
+    }
 
     @PostMapping("addComment")
     public String addComment(

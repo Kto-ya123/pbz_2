@@ -30,10 +30,12 @@ public class TShirtService {
     private String uploadPath;
 
     public boolean addTShirt(String username, String svg, String sex, String nameProduct,
-                          String topic, String discription) throws IOException {
+                          String topicName, String discription, String tagsString) throws IOException {
         User user = userRepository.findByUsername(username);
+        Topic topic = topicRepository.findByTopicName(topicName);
         String url = addImage(svg);
         TShirt tShirt = new TShirt();
+        tShirt.setTopic(topic);
         tShirt.setSex(Sex.getSexFromString(sex));
         tShirt.setDescription(discription);
         tShirt.setName(nameProduct);

@@ -8,7 +8,7 @@
     <div class="container d-flex flex-column  align-items-start  mb-5">
         <div class="row">
             <div class="col-sm">
-                <h3 class="display-4 ">All style</h3>
+                <h3 class="display-4 ">All styles</h3>
             </div>
         </div>
     </div>

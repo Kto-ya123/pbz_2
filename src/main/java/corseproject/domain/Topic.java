@@ -9,7 +9,9 @@ import javax.persistence.*;
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
+
+    private String topicName;
 
     public void setId(Long id) {
         this.id = id;
@@ -26,6 +28,6 @@ public class Topic {
         this.topicName = topicName;
     }
 
-    private String topicName;
 
-    }
+
+}

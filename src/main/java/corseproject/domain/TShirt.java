@@ -13,8 +13,11 @@ public class TShirt {
     @NotEmpty
     private String name;
 
-    @NotEmpty
     private String description;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
 
     @NotEmpty
     private String urlShirt;
@@ -88,5 +91,13 @@ public class TShirt {
 
     public void setUrlShirt(String urlShirt) {
         this.urlShirt = urlShirt;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 }

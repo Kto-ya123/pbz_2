@@ -2,10 +2,10 @@ package corseproject.controller;
 
 import com.cloudinary.utils.ObjectUtils;
 import corseproject.domain.Message;
+import corseproject.domain.Tag;
+import corseproject.domain.Topic;
 import corseproject.domain.User;
-import corseproject.repos.MessageRepository;
-import corseproject.repos.TShirtRepository;
-import corseproject.repos.UserRepository;
+import corseproject.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,6 +31,10 @@ public class MainController {
     private UserRepository userRepository;
     @Autowired
     private TShirtRepository tShirtRepository;
+    @Autowired
+    private TagRepository tagRepository;
+    @Autowired
+    private TopicRepository topicRepository;
 
     @Value("${upload.path}")
     private String uploadPath;

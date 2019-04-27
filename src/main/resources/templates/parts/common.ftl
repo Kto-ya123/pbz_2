@@ -1,3 +1,4 @@
+<#ftl encoding="utf-8">
 <#import "style.ftl" as s>
 <#macro page login user>
     <!DOCTYPE html>
@@ -69,7 +70,6 @@
     <#nested>
     </body>
     <div class="null"></div>
-
 </html>
     <script>
         function signOut(){

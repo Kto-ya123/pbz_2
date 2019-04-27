@@ -1,5 +1,6 @@
 package corseproject.service;
 
+import corseproject.domain.Role;
 import corseproject.domain.User;
 import corseproject.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,18 @@ public class UserService implements UserDetailsService {
         user.setActivationCode(null);
         user.setActive(true);
         userRepository.save(user);
+        return true;
+    }
+    public boolean getAccess(User authUser,String username){
+
+        if(authUser == null){
+            return false;
+        }
+        User user = userRepository.findByUsername(username);
+        if(!authUser.getUsername().equals(user.getUsername())
+                && !authUser.getRoles().contains(Role.ADMIN)){
+            return false;
+        }
         return true;
     }
 }

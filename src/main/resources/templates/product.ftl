@@ -14,6 +14,7 @@
                 <h4 class="mb-5 line" >Name:${tShirt.name}</h4>
                 <h4 class="mb-5 line" >Description:${tShirt.description}</h4>
                 <h4 class="mb-5 line" >Sex:${tShirt.sex}</h4>
+                <h4 class="mb-5 line" >Author:${tShirt.author.username}</h4>
                 <h4 class="mb-5 line" >Id:${tShirt.id}</h4>
 
                     Size<br>

@@ -8,7 +8,7 @@
  <div class="container d-flex flex-column  align-items-start  mb-5">
   <div class="row">
     <div class="col-sm">
-       <h3 class="display-4 ">My style</h3>
+       <h3 class="display-4 ">${userpage.username} styles</h3>
     </div>
   </div>
 </div>

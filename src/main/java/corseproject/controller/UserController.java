@@ -79,4 +79,13 @@ public class UserController {
 
     }
 
+    @PostMapping("unblock")
+    public String userUnblock(@RequestParam("userId") User user){
+        user.setActivationCode(null);
+        user.setActive(true);
+        userRepository.save(user);
+        return "redirect:";
+
+    }
+
 }

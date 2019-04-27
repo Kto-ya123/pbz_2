@@ -10,7 +10,7 @@
           
 
 			<div class="сontainer col-6 text-right " >		
-				<h3 class="display-4">${tShirt.name}</h3>
+				<h3 class="display-4"><b>Name:</b> ${tShirt.name}</h3>
                 <h5><b>Author:</b>  ${tShirt.author.username}</h5>
                 <h5><b>Topic:</b>  ${tShirt.topic.topicName?if_exists}</h5>
 	  			<h2 class="mb-5 line" >$18</h2>

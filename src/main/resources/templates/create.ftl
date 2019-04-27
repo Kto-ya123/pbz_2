@@ -24,8 +24,8 @@
                 <button class="btn btn-outline-primary addField add mb-3" type="button" name="print" style="margin-right: -3px;" >Add</button>
             </form>
 
-            <div style="height: 100px;" class="inputs" name="tag" id="tags">
-                <div class="inputs" name="dynamic[]" class="field"></div>
+            <div style="height: 100px;" class="inputs" id="tag" name="tag">
+                <div class="inputs" name="dynamic" id="tags" class="field"></div>
             </div>
 
             <select id="sex" onclick="sex()"  class="custom-select searchcolor mb-3" style="width: 200px">
@@ -103,9 +103,11 @@
         var sex = document.getElementById('sex').value;
         var description = document.getElementById('description').value;
         var topic = document.getElementById('topic').value;
-        var tags = "";
-        for(i = 0; i < 4; i++){
-            tags += document.getElementById('comment_data').value;
+        var tags = getTags();
+
+        var tag="";
+        for(i = 0; i < tags.length; i++){
+            tag+=tags[i];
         }
 
         var svg = canvas.toSVG();
@@ -127,6 +129,7 @@
     }
 </script>
 <script >
+    var tags = new Array(0);
     $(document).ready(function () {
         kol=0;
         $('html').on('click','.add',function () {
@@ -135,14 +138,22 @@
             if (kol<4 && d.length<15){
                 $('<i class="btn searchcolor"style="margin-left:15px;margin-top:30px;font-style:normal; "><input type="file"  " class="field mb-5 " name="dynamic[]" /><span class="remove">'+d+' <i class="fa fa-remove"></i> </span></i> ').fadeIn('slow').appendTo('.inputs');
                 kol++;
+                tags[tags.length] = d;
             }
         });
         $('html').on('click','.remove', function () {
+            var position = tags.indexOf($(this).parent());
+            tags.splice(position,1);
+
             $(this).parent().remove();
             kol--;
         });
 
     });
+    function getTags() {
+        return tags;
+
+    }
 </script>
 
 <script type="text/javascript">

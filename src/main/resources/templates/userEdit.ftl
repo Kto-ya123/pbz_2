@@ -32,6 +32,12 @@
             <button class="btn btn-outline-primary" style="width: 100px;" type="submit">Block</button>
             <input  type="hidden" name="_csrf" value="${_csrf.token}"/>
         </form>
+        <form action="/user/unblock" method="post">
+            <br>
+            <input type="hidden" value="${user.id}" name="userId"/>
+            <button class="btn btn-outline-primary" style="width: 100px;" type="submit">Unblock</button>
+            <input  type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </form>
         <br>
         <button class="btn btn-outline-primary" onclick="location.href= '/${user.username}'"  style="width: 100px;" type="Button">ToPage</button>
         </div>

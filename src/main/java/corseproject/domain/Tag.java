@@ -7,13 +7,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tags")
 public class Tag {
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     private String tagName;
 

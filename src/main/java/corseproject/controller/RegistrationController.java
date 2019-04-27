@@ -36,9 +36,13 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUse(@RequestParam String passwordrepeat, User user, Model model){
         User userFromDb = userRepository.findByUsername(user.getUsername());
-
         if(userFromDb != null){
             model.addAttribute("errormessage", "User exists!");
+            return "registration";
+        }
+        User userFromMail = userRepository.findByEmail(user.getEmail());
+        if(userFromMail != null){
+            model.addAttribute("errormessage", "mail exists");
             return "registration";
         }
         if(!user.getPassword().equals(passwordrepeat)){

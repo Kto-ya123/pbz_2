@@ -35,6 +35,8 @@ public class MainController {
     private TagRepository tagRepository;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -100,6 +102,7 @@ public class MainController {
     @GetMapping("/")
     public  String greeting(Model model,
                             @AuthenticationPrincipal User user){
+
         if(user != null){
             model.addAttribute("user", user);
         }

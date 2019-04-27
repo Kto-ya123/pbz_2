@@ -12,6 +12,26 @@
             </div>
         </div>
     </div>
+    <select id="selectsize" class="custom-select searchcolor " style="width: 200px">
+        <option selected>Man</option>
+        <option value="1">Woman</option>
+    </select>
+
+    <select class="custom-select searchcolor " style="width: 200px; ">
+        <option selected>humor</option>
+        <option value="1">sex</option>
+        <option value="2">IT</option>
+        <option value="3">girl</option>
+        <option value="4">man</option>
+        <option value="5">anime</option>
+        <option value="6">children</option>
+        <option value="7">sport</option>
+        <option value="8">game</option>
+        <option value="9">music</option>
+    </select>
+
+    <button class="btn btn-outline-primary" type="button">Del</button>
+    <button class="btn btn-outline-primary" type="button">But</button>
     <div class="row">
         <#list tShirts as tShirt>
             <div class="col-4 hover  ">

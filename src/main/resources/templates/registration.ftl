@@ -6,7 +6,9 @@
         <div>
             <h2>Sign Up</h2>
             <p>Please enter your details here</p>
-            <p><#if errormessage??>${errormessage}</#if></p>
+            <p><#if errormessage??>
+                <div style="color:red;border-color: red;width: 258px;" class="btn mb-">${errormessage}</div>
+            </#if></p>
             <form action="/registration" method="post">
                 <div class="md-5">
                     <label for="login_form">Login</label>

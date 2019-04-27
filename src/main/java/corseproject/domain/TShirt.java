@@ -1,18 +1,26 @@
 package corseproject.domain;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "tshirt")
+@Indexed
 public class TShirt {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Field(termVector = TermVector.YES)
     @NotEmpty
     private String name;
 
+    @Field(termVector = TermVector.YES)
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -44,22 +52,12 @@ public class TShirt {
     @JoinColumn(name = "user_id")
     private User author;
 
-
+    @Field(termVector = TermVector.YES)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "tag_id")
-    Set<Tag> tags;
+    List<Tag> tags;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
 
     public Sex getSex() {
         return sex;
@@ -99,5 +97,13 @@ public class TShirt {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

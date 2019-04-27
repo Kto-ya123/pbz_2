@@ -58,7 +58,52 @@
     </div>
 </div>
 </@c.page>
+<style type="text/css">
+    .text-field {
+        -moz-box-sizing: border-box;
+        border: 1px solid #EEEEEE;
+        font-family: "Source Sans Pro",Arial,sans-serif;
+        font-size: 0.73684em;
+        font-weight: 600;
+        height: 37px;
+        margin: 0;
+        padding: 5px;
+        width: 100%;
+    }
+    .autocomplete-suggestion {
+        overflow: hidden;
+        padding: 2px 5px;
+        white-space: nowrap;
+    }
+    .autocomplete-suggestions strong {
+        color: #3399FF;
+        font-weight: normal;
+    }
+    .autocomplete-selected{
+        background:#F0F0F0;
+    }
 
+</style>
+<script>
+    var v = new Array();
+    <#list exists_tag as tag>
+        v[v.length] = "${tag.tagName}";
+    </#list>
+    v[v.length] = "arti";
+    //a1 = $('#query').autocomplete({
+    //    width: 448,
+    //    delimiter: /(,|;)\s*/,
+    //    lookup: 'Andorra,Azerbaijan,Bahamas,Bahrain,Benin,Bhutan,Bolivia,Bosnia Herzegovina,Botswana,Brazil,Brunei,Bulgaria,Burkina, Burundi,Cambodia,Cameroon,Canada,Cape Verde,Central African Rep,Chile,China,Colombia,Comoros,Congo,Congo {Democratic Rep},Costa Rica,Croatia,Cuba,Cyprus,Czech Republic,Denmark,Djibouti,East Timor,Ecuador,Egypt,El Salvador,Equatorial Guinea,Eritrea,Fiji,France,Georgia,Germany,Ghana,Greece,Grenada,Guatemala,Guinea,Guinea-Bissau,Guyana,Haiti,Honduras,Hungary,India,Iraq,Ireland {Republic},Ivory Coast,Jamaica,Japan,Kazakhstan,Kiribati,Korea North,'.split(',')
+    //});
+    a1 = $('#comment_data').autocomplete({
+        width: 448,
+        delimiter: /(,|;)\s*/,
+        lookup: v
+    });
+
+
+
+</script>
 
 <script>
     var canvas = new fabric.Canvas('canvas');
@@ -104,6 +149,8 @@
         var description = document.getElementById('description').value;
         var topic = document.getElementById('topic').value;
         var tags = getTags();
+        var elem = getElem();
+        var index = getIndex();
 
         var tag="";
         for(i = 0; i < tags.length; i++){
@@ -119,6 +166,8 @@
         document.write(" <input type='hidden' name='discription' value='"+ description +"'/>");
         document.write(" <input type='hidden' name='sex' value='"+ sex +"'/>");
         document.write(" <input type='hidden' name='tags' value='"+ tags +"'/>");
+        document.write(" <input type='hidden' name='elem' value='"+ elem +"'/>");
+        document.write(" <input type='hidden' name='index' value='"+ index +"'/>");
         document.write('<input type="hidden" name="username" value="${userpage}"/>');
         document.write('<input type="hidden" name="_csrf" value="${_csrf.token}"/>');
         document.write(load);
@@ -130,20 +179,30 @@
 </script>
 <script >
     var tags = new Array(0);
+    var elem;
+    var index;
     $(document).ready(function () {
         kol=0;
         $('html').on('click','.add',function () {
             d=($("#comment_data").text($(".searchcolor")).val());
             console.log(d);
-            if (kol<4 && d.length<15){
-                $('<i class="btn searchcolor"style="margin-left:15px;margin-top:30px;font-style:normal; "><input type="file"  " class="field mb-5 " name="dynamic[]" /><span class="remove">'+d+' <i class="fa fa-remove"></i> </span></i> ').fadeIn('slow').appendTo('.inputs');
+            if (kol<4 && d.length<15 && d.length >0){
+                if(tags.indexOf(d) != -1){
+                    return;
+                }
+                $('<i class="btn searchcolor"style="margin-left:15px;margin-top:30px;font-style:normal; "><input type="file"  " class="field mb-5 " name="dynamic[]" /><span class="remove" id="del_tag">'+d+' <i class="fa fa-remove"></i></span></i>').fadeIn('slow').appendTo('.inputs');
                 kol++;
                 tags[tags.length] = d;
             }
         });
         $('html').on('click','.remove', function () {
-            var position = tags.indexOf($(this).parent());
+            var tag = $(this).text();
+            tag = tag.substring(0, tag.length - 1);
+            var position = tags.indexOf(tag);
+            index = position;
             tags.splice(position,1);
+            elem = tag;
+
 
             $(this).parent().remove();
             kol--;
@@ -152,6 +211,12 @@
     });
     function getTags() {
         return tags;
+    }
+    function getElem(){
+        return elem;
+    }
+    function getIndex() {
+        return index;
 
     }
 </script>

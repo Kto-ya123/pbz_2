@@ -1,25 +1,20 @@
 package corseproject.controller;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import corseproject.domain.*;
 import corseproject.repos.CommentRepository;
 import corseproject.repos.TShirtRepository;
+import corseproject.repos.TagRepository;
 import corseproject.repos.TopicRepository;
-import corseproject.repos.UserRepository;
 import corseproject.service.TShirtService;
 import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/TShirts")
@@ -34,6 +29,8 @@ public class TShirtController {
     private TShirtService tShirtService;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     @GetMapping()
     public String allStyle(@AuthenticationPrincipal User authUser,
@@ -70,7 +67,9 @@ public class TShirtController {
             return"redirect:/";
         }
         Iterable<Topic> topics = topicRepository.findAll();
+        Iterable<Tag> tags = tagRepository.findAll();
 
+        model.addAttribute("exists_tag", tags);
         model.addAttribute("topics", topics);
         model.addAttribute("user", authUser);
         model.addAttribute("userpage", username);

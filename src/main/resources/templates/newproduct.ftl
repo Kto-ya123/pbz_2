@@ -21,20 +21,7 @@
 				  	<option value="2">X</option> 
 				</select><br>
         Sex<br>
-        <select id="select" onclick="sex()"  class="custom-select searchcolor mb-3" style="width: 200px">               
-                    <option id="q" selected>Man</option>
-                    <option id="q" value="1">Woman</option>
-                </select><br>   
-		
-
-
-       
-        <button onclick="red()"  class="btn mb-5" style="background-color:#FF0000 ;margin-left: 13px" type="button"></button>
-        <button onclick="skyblue()" class="btn mb-5"style="background-color:skyblue ;margin-left: 13px"  type="button"></button>
-        <button onclick="green()" class="btn mb-5" style="background-color:#39E639;margin-left: 13px"  type="button"></button>
-        <button onclick="black()" class="btn mb-5" style="background-color:black;margin-left: 13px"  type="button"></button>
-        <button onclick="white()" class="btn  mb-5"style="background-color:white; border:1px solid black ;margin-left: 13px" type="button"></button><br>
-      
+                <h5><#if tShirt.sex == "MALE">Man<#else>Woman</#if></h5>
 
 
         <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button">Buy It Now</button>
@@ -74,10 +61,13 @@
 <div class="container mb-5">
   <ul class="">
       <li class="media ">
-           
-            <div><br><span class="btn searchcolor" style="margin-right: 15px">#Each</span>
-              <span class="btn searchcolor" style="margin-right: 15px">#Each</span>
-            </div>   
+          <#if tShirt.tags??>
+            <div><br>
+                <#list tShirt.tags as tag>
+                    <span class="btn searchcolor" style="margin-right: 15px">${tag.tagName}</span>
+                </#list>
+            </div>
+          </#if>
 
     </li>
   </ul>

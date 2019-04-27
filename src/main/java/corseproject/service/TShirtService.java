@@ -25,16 +25,20 @@ public class TShirtService {
     private UserRepository userRepository;
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private TagService tagService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     public boolean addTShirt(String username, String svg, String sex, String nameProduct,
-                          String topicName, String discription, String tagsString) throws IOException {
+                          String topicName, String discription, String tags) throws IOException {
         User user = userRepository.findByUsername(username);
         Topic topic = topicRepository.findByTopicName(topicName);
+
         String url = addImage(svg);
         TShirt tShirt = new TShirt();
+        tShirt.setTags(tagService.getTagsFromString(tags));
         tShirt.setTopic(topic);
         tShirt.setSex(Sex.getSexFromString(sex));
         tShirt.setDescription(discription);
@@ -67,6 +71,7 @@ public class TShirtService {
         Map uploadRezult = cloudinary.uploader().upload(uploadPath + "/file.png", ObjectUtils.emptyMap());
         String pathSVG = uploadRezult.get("secure_url").toString();
         String pathPNG = pathSVG.substring(0, pathSVG.length()-3)+"png";
+        String pathJPG = pathSVG.substring(0, pathSVG.length()-3)+"jpg";
         return pathPNG;
     }
 }

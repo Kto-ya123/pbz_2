@@ -1,9 +1,8 @@
 package corseproject.controller;
 
+import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import corseproject.domain.Message;
-import corseproject.domain.Tag;
-import corseproject.domain.Topic;
 import corseproject.domain.User;
 import corseproject.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.cloudinary.Cloudinary;
 
 import java.io.File;
 import java.io.IOException;

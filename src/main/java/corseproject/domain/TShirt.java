@@ -1,4 +1,5 @@
 package corseproject.domain;
+
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.TermVector;
@@ -6,7 +7,6 @@ import org.hibernate.search.annotations.TermVector;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "tshirt")
@@ -52,7 +52,6 @@ public class TShirt {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @Field(termVector = TermVector.YES)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "tag_id")
     List<Tag> tags;

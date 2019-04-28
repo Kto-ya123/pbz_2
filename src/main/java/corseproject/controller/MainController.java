@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import corseproject.domain.Message;
 import corseproject.domain.User;
 import corseproject.repos.*;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -98,8 +100,7 @@ public class MainController {
 
     @GetMapping("/")
     public  String greeting(Model model,
-                            @AuthenticationPrincipal User user){
-
+                            @AuthenticationPrincipal User user)  {
         if(user != null){
             model.addAttribute("user", user);
         }

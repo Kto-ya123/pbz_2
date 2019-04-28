@@ -90,11 +90,6 @@
         v[v.length] = "${tag.tagName}";
     </#list>
     v[v.length] = "arti";
-    //a1 = $('#query').autocomplete({
-    //    width: 448,
-    //    delimiter: /(,|;)\s*/,
-    //    lookup: 'Andorra,Azerbaijan,Bahamas,Bahrain,Benin,Bhutan,Bolivia,Bosnia Herzegovina,Botswana,Brazil,Brunei,Bulgaria,Burkina, Burundi,Cambodia,Cameroon,Canada,Cape Verde,Central African Rep,Chile,China,Colombia,Comoros,Congo,Congo {Democratic Rep},Costa Rica,Croatia,Cuba,Cyprus,Czech Republic,Denmark,Djibouti,East Timor,Ecuador,Egypt,El Salvador,Equatorial Guinea,Eritrea,Fiji,France,Georgia,Germany,Ghana,Greece,Grenada,Guatemala,Guinea,Guinea-Bissau,Guyana,Haiti,Honduras,Hungary,India,Iraq,Ireland {Republic},Ivory Coast,Jamaica,Japan,Kazakhstan,Kiribati,Korea North,'.split(',')
-    //});
     a1 = $('#comment_data').autocomplete({
         width: 448,
         delimiter: /(,|;)\s*/,

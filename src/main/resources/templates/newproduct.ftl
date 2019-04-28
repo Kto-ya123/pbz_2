@@ -10,10 +10,33 @@
           
 
 			<div class="сontainer col-6 text-right " >		
-				<h3 class="display-4"><b>Name:</b> ${tShirt.name}</h3>
-                <h5><b>Author:</b>  ${tShirt.author.username}</h5>
-                <h5><b>Topic:</b>  ${tShirt.topic.topicName?if_exists}</h5>
-	  			<h2 class="mb-5 line" >$18</h2>
+				<h3 class="display-4">${tShirt.name}</h3>
+                <div style="width: 120px; margin-left:420px;">
+                    <h6>Rating:${tShirt.rating?if_exists} Amount:${quantity} </h6>
+                    <#if user??>
+                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5" onclick="rat()">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
+
+                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4" onclick="rat()">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
+
+                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3" onclick="rat()">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
+
+
+                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2" onclick="rat()">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
+
+
+                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1" onclick="rat()">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars" ></label>
+                    </#if>
+                </div>
+                <br>
+	  			<h2 class="line" >$18</h2>
+                <h4><b>Author:</b>  ${tShirt.author.username}</h4>
+                <h4><b>Topic:</b>  ${tShirt.topic.topicName?if_exists}</h4>
+                <br>
 	  			Size<br>		
 	  			<select id="selectsize" class="custom-select searchcolor  mb-3" style="width: 200px"> 				
 				  	<option selected>M</option>
@@ -27,17 +50,16 @@
         <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button">Buy It Now</button>
         <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button">Add to cart</button>
         <#if access??>
-            <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button">Editing T-shirt</button>
             <form action="/TShirts/${tShirt.id}/delete" method="post">
                 <input type="hidden" value="${tShirt.id}" name="tShirtId"/>
                 <input  type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <button class="btn btn-outline-primary mb-3" style="width: 200px" type="submit">Delete</button>
             </form>
         </#if>
+            </div>
 
 
-				</div>
-
+        <div class="input-group"> <br>
 	  		</div>							
 	</div>
 </div>
@@ -73,21 +95,22 @@
   </ul>
 </div>
 
-<h3 class="container md-2">Comments</h3>
+<h3 onload="comments();" class="container md-2">Comments</h3>
 
 
-
-    <#list comments as comment>
-        <div class="container shadow-sm col-9 p-3 mb-3 comments">
-            <ul class="">
-                <li class="media">
-                    <div class="line" >${comment.author.username}</div>
-                    <div><br><span>${comment.message}</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </#list>
+<div id="comm">
+        <#list comments as comment>
+            <div class="container shadow-sm col-9 p-3 mb-3 comments">
+                <ul class="">
+                    <li class="media">
+                        <div class="line" >${comment.author.username}</div>
+                        <div><br><span>${comment.message}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </#list>
+</div>
 
 <div id="printBlock" class="mb-3">
 
@@ -107,6 +130,27 @@
         </form>
     </#if>
 </@c.page>
+<script type="text/javascript">
+    function rat() {
+        var q=document.querySelector('input[name="rating"]:checked').value;
+        setRat(q);
+    };
+    function setRat(q) {
+        $.ajax({
+            type: "GET",
+            url:"/TShirts/${tShirt.id}/rating?value="+q,
+            data: ${tShirt.id},
+            success: function (rezult) {
+
+            }
+        })
+
+    }
+
+
+
+</script>
+
 <script>
 function printForm(e){
     
@@ -132,7 +176,33 @@ var printButton = document.search.print;
 printButton.addEventListener("click", printForm);
 </script>
 
+<script>
+    window.onload = function () {
+        comments();
+        <#if user??>
+            setRating();
+        </#if>
+    }
+    function setRating() {
+        var rate = document.getElementById('star-rating-${rating}');
+        rate.checked = rate;
+    }
 
+    function comments() {
+        setInterval(loadComment, 2000);
+    }
+    function loadComment() {
+        $.ajax({
+            type: "GET",
+            url:"/comment/getcomment/${tShirt.id}",
+            data: ${tShirt.id},
+            success: function (rezult) {
+                $('#comm').empty();
+                $(rezult).appendTo('#comm');
+            }
+        })
+    }
+</script>
 
 
 <script type="text/javascript">

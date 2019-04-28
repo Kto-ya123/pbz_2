@@ -1,10 +1,8 @@
 package corseproject.controller;
 
 import corseproject.domain.*;
-import corseproject.repos.CommentRepository;
-import corseproject.repos.TShirtRepository;
-import corseproject.repos.TagRepository;
-import corseproject.repos.TopicRepository;
+import corseproject.repos.*;
+import corseproject.service.RatingService;
 import corseproject.service.TShirtService;
 import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,10 @@ public class TShirtController {
     private TopicRepository topicRepository;
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private RatingRepository ratingRepository;
+    @Autowired
+    private RatingService ratingService;
 
     @GetMapping()
     public String allStyle(@AuthenticationPrincipal User authUser,
@@ -51,10 +53,27 @@ public class TShirtController {
         if(userService.getAccess(authUser, tShirt.getAuthor().getUsername())){
             model.addAttribute("access", 1);
         }
+        int quantity = ratingService.getQuantity(tShirt);
+        if(authUser != null) {
+            Rating rating = ratingRepository.findByTShirtAndAuthor(tShirt, authUser);
+            if(rating != null) {
+                model.addAttribute("rating", rating.getValue());
+            }
+        }
+        model.addAttribute("quantity", quantity);
         model.addAttribute("tShirt", tShirt);
         model.addAttribute("comments", comments);
         model.addAttribute("user", authUser);
         return "newproduct";
+    }
+
+    @GetMapping("/{tShirt}/rating")
+    public void addRating(@PathVariable TShirt tShirt,
+                            @RequestParam String value,
+                            @AuthenticationPrincipal User user){
+        if(user != null) {
+            ratingService.addRate(user, Integer.parseInt(value), tShirt);
+        }
     }
 
 

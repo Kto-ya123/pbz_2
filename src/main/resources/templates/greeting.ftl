@@ -6,13 +6,13 @@
         <div id="carouselExampleControls " class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="style/main.png" >
+                    <img class="d-block w-100" src="https://res.cloudinary.com/itr/image/upload/v1556465771/main3_ux5dmu.png" >
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="style/main.png" alt="First slide">
+                    <img class="d-block w-100" src="https://res.cloudinary.com/itr/image/upload/v1556465771/main1_rv1grd.png" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="style/main.png" alt="Second slide">
+                    <img class="d-block w-100" src="https://res.cloudinary.com/itr/image/upload/v1556465771/main2_bzfb2o.png" alt="Second slide">
                 </div>
             </div>
 

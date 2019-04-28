@@ -9,7 +9,7 @@ public enum Sex {
         }else if(sex.equals("female")){
             return Sex.FEMALE;
         }else{
-            return Sex.MALE;
+            return null;
         }
     }
 }

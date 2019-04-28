@@ -14,12 +14,12 @@
 </div>
   <div class="row">
       <#list tShirts as tShirt>
-            <div class="col-4 hover  ">
-              <div  class=" col d-flex flex-column  align-items-center  border-bottom shadow-sm border size" >
+            <div class="col-4">
+              <div  class=" col d-flex flex-column  align-items-center  border-bottom shadow-sm border size hover" >
                   <a href="/TShirts/${tShirt.id}">
                 <img class="d-block w-100" src="${tShirt.urlShirt}" style="width: 285px;height: 274px;">
                    </a>
-                  <h5>Price</h5>
+                  <h5>18$</h5>
                   <button class="btn btn-outline-primary margin" type="button">Buy</button>
               </div>
             </div>

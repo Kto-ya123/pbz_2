@@ -36,10 +36,29 @@ public class TShirtController {
 
     @GetMapping()
     public String allStyle(@AuthenticationPrincipal User authUser,
+                             @RequestParam(required = false) String inputtag,
+                             @RequestParam(required = false) String topic,
+                             @RequestParam(required = false) String sex,
                              Model model){
 
-        Iterable<TShirt> tShirts = tShirtRepository.findAll();
+        if(sex == null){
+            sex = "";
+        }
+        if(topic == null)
+        {
+            topic = "";
+        }
+        if(inputtag == null)
+        {
+            inputtag = "";
+        }
 
+        List<TShirt> tShirts = tShirtService.findWithFilter(sex, topic, inputtag);
+        Iterable<Topic> topics = topicRepository.findAll();
+        Iterable<Tag> tags = tagRepository.findAll();
+
+        model.addAttribute("exists_tag", tags);
+        model.addAttribute("topics", topics);
         model.addAttribute("user", authUser);
         model.addAttribute("tShirts", tShirts);
 

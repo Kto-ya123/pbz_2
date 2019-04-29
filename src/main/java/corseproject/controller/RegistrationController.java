@@ -6,6 +6,7 @@ import corseproject.repos.UserRepository;
 import corseproject.service.MailSender;
 import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,31 +28,36 @@ public class RegistrationController {
     private UserService userService;
 
     @GetMapping("/registration")
-    public String reg(){
+    public String reg(@AuthenticationPrincipal User authUser, @RequestParam(required = false) String error, Model model){
+        if(error != null) {
+            model.addAttribute("errormessage", error);
+        }
+        model.addAttribute("user", authUser);
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String addUse(@RequestParam String passwordrepeat, User user, Model model){
-
+    public String addUse(@RequestParam String passwordrepeat, User user){
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if(userFromDb != null){
-            model.addAttribute("errormessage", "User exists!");
-            return "registration";
+            String message = "User exists";
+            return "redirect:/registration?error="+message;
         }
         User userFromMail = userRepository.findByEmail(user.getEmail());
         if(userFromMail != null){
-            model.addAttribute("errormessage", "mail exists");
-            return "registration";
+            String message = "mail exists";
+            return "redirect:/registration?error="+message;
         }
         if(!user.getPassword().equals(passwordrepeat)){
-            model.addAttribute("errormessage", "passwords don't equal");
-            return "registration";
+            String message = "passwords don't equal";
+            return "redirect:/registration?error="+ message;
         }
+
         if(!userService.addUser(user)) {
-            model.addAttribute("errormessage", "check entered data");
-            return "registration";
+            String message = "check entered data";
+            return "redirect:/registration?error=" + message;
         }
+
         return "redirect:/#login_form";
     }
 

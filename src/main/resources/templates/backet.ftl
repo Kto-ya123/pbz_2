@@ -3,22 +3,11 @@
 <@c.page login!false user!false>
 
 <div class="null"> </div>
-
-
-
 <div class="container">
     <div class="d-flex flex-column flex-md-row align-items-center p-3 mb-3 bg-white  shadow-sm border-top border-bottom border-left border-right row">
-        <div class="col">Product name</div>
-        <div class="col "><img class="" src="style/main1.png" style="width: 50px;height: 50px;">  </div>
+        <div class="col">${tShirt.name}</div>
+        <div class="col "><img class="" src="${tShirt.urlShirt}" style="width: 50px;height: 50px;">  </div>
         <div class="col ">18$</div>
-
-    </div>
-
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 mb-3 bg-white  shadow-sm border-top border-bottom border-left border-right row">
-        <div class="col">Product name</div>
-        <div class="col "><img class="" src="style/main.png" style="width: 50px;height: 50px;">  </div>
-        <div class="col ">18$</div>
-
     </div>
 </div>
 

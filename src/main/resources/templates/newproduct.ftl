@@ -47,8 +47,7 @@
                 <h5><#if tShirt.sex == "MALE">Man<#else>Woman</#if></h5>
 
 
-        <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button">Buy It Now</button>
-        <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button">Add to cart</button>
+        <button class="btn btn-outline-primary mb-3" style="width: 200px" type="button"  onclick="location.href= '/TShirts/${tShirt.id}/backet'">Buy It Now</button>
         <#if access??>
             <form action="/TShirts/${tShirt.id}/delete" method="post">
                 <input type="hidden" value="${tShirt.id}" name="tShirtId"/>

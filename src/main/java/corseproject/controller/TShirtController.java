@@ -149,8 +149,9 @@ public class TShirtController {
     public String deleteStyle(@AuthenticationPrincipal User authUser,
                               @PathVariable TShirt tShirt){
         if(userService.getAccess(authUser, tShirt.getAuthor().getUsername())){
-            commentRepository.deleteByTShirt(tShirt);
-            ratingRepository.deleteByTShirt(tShirt);
+            Iterable<Comment> comments = commentRepository.findByTShirt(tShirt);
+            comments.forEach(comment -> commentRepository.delete(comment));
+            ratingService.deleteByTShirt(tShirt);
             tShirtRepository.delete(tShirt);
             return "redirect:/"+tShirt.getAuthor().getUsername();
         }

@@ -44,4 +44,8 @@ public class RatingService {
         List<Rating> rate = ratingRepository.findByTShirt(tShirt);
         return rate.size();
     }
+    public void deleteByTShirt(TShirt tShirt){
+        Iterable<Rating> rate = ratingRepository.findByTShirt(tShirt);
+        rate.forEach(rating -> ratingRepository.delete(rating));
+    }
 }

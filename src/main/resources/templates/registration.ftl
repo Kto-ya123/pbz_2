@@ -1,4 +1,3 @@
-
 <#import "parts/common.ftl" as c>
 <#if user??><#assign login = true></#if>
 <@c.page login!false user!false>

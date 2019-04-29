@@ -19,8 +19,6 @@ public class Rating {
 
     private int value;
 
-
-
     public long getId() {
         return id;
     }

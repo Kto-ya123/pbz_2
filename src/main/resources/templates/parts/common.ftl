@@ -35,19 +35,6 @@
                 <a class="btn btn-outline-primary" href="#login_form" id="join_pop">Log In</a>
             </nav>
         </#if>
-
-
-        <nav class="my-2 my-md-0 mr-md-3">
-            <div class="input-group ">
-                <input type="text" class="form-control searchcolor" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="button">Search</button>
-                </div>
-            </div>
-        </nav>
-        <div class="input-group-append">
-            <button class="btn btn-outline-primary " onclick="location.href= '/backet'" type="button"><i class="fa fa-shopping-cart "></i></button>
-        </div>
     </div>
     <!--   ==========         ЛОГИН     ==========          -->
     <a href="#x" class="overlay" id="login_form"></a>

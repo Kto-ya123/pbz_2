@@ -89,7 +89,7 @@ public class TShirtService {
     public List<TShirt> getNew(){
         ArrayList<TShirt> allTShirts= new ArrayList<>(findAll());
         ArrayList<TShirt> newTShirts = new ArrayList<>();
-        for (int i = 1; i <= 5; i++){
+        for (int i = 1; i <= 5 && (allTShirts.size() - i) >= 0; i++){
             newTShirts.add(allTShirts.get(allTShirts.size() - i));
         }
         return newTShirts;
@@ -134,7 +134,7 @@ public class TShirtService {
         Comparator<TShirt> comparator = Comparator.comparing(obj-> obj.getRating());
         tShirts.sort(comparator);
         ArrayList<TShirt> popularTShirts = new ArrayList<>();
-        for(int i = 1; i <= 5; i++){
+        for(int i = 1; i <= 5 && (tShirts.size() - i) >= 0; i++){
             popularTShirts.add(tShirts.get(tShirts.size() - i));
         }
         return popularTShirts;

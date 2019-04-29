@@ -33,6 +33,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUse(@RequestParam String passwordrepeat, User user, Model model){
+
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if(userFromDb != null){
             model.addAttribute("errormessage", "User exists!");
@@ -47,36 +48,21 @@ public class RegistrationController {
             model.addAttribute("errormessage", "passwords don't equal");
             return "registration";
         }
-
-        user.setActive(false);
-        user.setRoles(Collections.singleton(Role.USER));
-        user.setActivationCode(UUID.randomUUID().toString());
-        String message = String.format(
-                "Hello, %s! \n" +
-                        "Welcome to TShirts, Please, visit new link:"+
-                        "http://localhost:8080/activate/%s",
-                user.getUsername(),
-                user.getActivationCode()
-        );
-        mailSender.send(user.getEmail(), "Activation code", message);
-        try {
-            userRepository.save(user);
-        }catch (Exception e){
+        if(!userService.addUser(user)) {
             model.addAttribute("errormessage", "check entered data");
             return "registration";
         }
-
         return "redirect:/#login_form";
     }
+
     @GetMapping("/activate/{code}")
-    public String activate(Model model, @PathVariable String code){
+    public String activate(@PathVariable String code){
         userService.activateUser(code);
-
         return "redirect:/#login_form";
     }
-    /*
+
     @GetMapping("/error")
     public String error(){
         return "redirect:/";
-    }*/
+    }
 }

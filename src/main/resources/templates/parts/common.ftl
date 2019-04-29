@@ -9,9 +9,8 @@
     <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm border">
         <nav class="col-sm ">
+            <a class="p-2 text-dark" href="/">Main Page</a>
             <a class="p-2 text-dark" href="/TShirts">T-shirts</a>
-            <a class="p-2 text-dark" href="#">Woman</a>
-            <a class="p-2 text-dark" href="#">Man</a>
         </nav>
         <#if login>
             <div class="btn-group my-2 my-md-0 mr-md-3">
@@ -20,9 +19,13 @@
                     <span class="sr-only ">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu ">
-                    <a class="dropdown-item " href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <#if user ??>
+                        <#list user.roles as role>
+                            <#if role == "ADMIN">
+                                <a class="dropdown-item" href="/user">Admin Panel</a>
+                            </#if>
+                        </#list>
+                    </#if>
                     <a class="dropdown-item" onclick="signOut();">Sign out</a>
                     <div class="dropdown-divider"></div>
                 </div>

@@ -40,19 +40,30 @@ public class TShirtController {
                              @RequestParam(required = false) String topic,
                              @RequestParam(required = false) String sex,
                              Model model){
-
+        String filter = "";
         if(sex == null){
             sex = "";
+        }else if(!sex.equals("<none>") && !sex.equals("")){
+            filter += " Sex: " +  sex + ";";
         }
+
         if(topic == null)
         {
             topic = "";
+        }else if(!topic.equals("<none>") && !topic.equals("")){
+            filter += " Topic: " + topic + ";";
         }
+
         if(inputtag == null)
         {
             inputtag = "";
+        }else if(!inputtag.equals("")){
+            filter += " Tag: " + inputtag + ";";
         }
 
+        if(!filter.equals("")){
+            model.addAttribute("filter", filter);
+        }
         List<TShirt> tShirts = tShirtService.findWithFilter(sex, topic, inputtag);
         Iterable<Topic> topics = topicRepository.findAll();
         Iterable<Tag> tags = tagRepository.findAll();
@@ -61,7 +72,6 @@ public class TShirtController {
         model.addAttribute("topics", topics);
         model.addAttribute("user", authUser);
         model.addAttribute("tShirts", tShirts);
-
         return "allstyles";
     }
 
@@ -112,7 +122,6 @@ public class TShirtController {
         model.addAttribute("user", authUser);
         model.addAttribute("userpage", username);
         model.addAttribute("message", message);
-
         return "create";
     }
 
@@ -140,6 +149,8 @@ public class TShirtController {
     public String deleteStyle(@AuthenticationPrincipal User authUser,
                               @PathVariable TShirt tShirt){
         if(userService.getAccess(authUser, tShirt.getAuthor().getUsername())){
+            commentRepository.deleteByTShirt(tShirt);
+            ratingRepository.deleteByTShirt(tShirt);
             tShirtRepository.delete(tShirt);
             return "redirect:/"+tShirt.getAuthor().getUsername();
         }

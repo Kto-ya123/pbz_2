@@ -3,7 +3,6 @@ package corseproject.controller;
 import corseproject.domain.Comment;
 import corseproject.domain.TShirt;
 import corseproject.repos.CommentRepository;
-import corseproject.repos.TShirtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +15,7 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private CommentRepository commentRepository;
-    @Autowired
-    private TShirtRepository tShirtRepository;
+
     @GetMapping("/comment/getcomment/{tShirt}")
     public String getComment(@PathVariable TShirt tShirt, Model model){
         List<Comment> comments = commentRepository.findByTShirt(tShirt);

@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public class TShirtService {
         tShirt.setName(nameProduct);
         tShirt.setUrlShirt(url);
         tShirt.setAuthor(user);
-
+        //tShirt.setId();
         try {
                 tShirtRepository.save(tShirt);
         }catch(Exception ex){
@@ -63,11 +64,11 @@ public class TShirtService {
         FileWriter writer = new FileWriter(uploadPath + "/file.png", false);
         writer.append(svg);
         writer.flush();
-        String url = addToCloud(uploadPath+"/file.png");
+        String url = addToCloud();
         return url;
     }
 
-    private String addToCloud(String path) throws IOException {
+    private String addToCloud() throws IOException {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name","itr",
                 "api_key","224226883725776",
@@ -75,14 +76,23 @@ public class TShirtService {
         Map uploadRezult = cloudinary.uploader().upload(uploadPath + "/file.png", ObjectUtils.emptyMap());
         String pathSVG = uploadRezult.get("secure_url").toString();
         String pathPNG = pathSVG.substring(0, pathSVG.length()-3)+"png";
-        String pathJPG = pathSVG.substring(0, pathSVG.length()-3)+"jpg";
         return pathPNG;
     }
+
     private List<TShirt> findAll(){
         Iterable<TShirt> iterable = tShirtRepository.findAll();
         ArrayList<TShirt> tShirts = new ArrayList<>();
         iterable.forEach(tShirt -> tShirts.add(tShirt));
         return tShirts;
+    }
+
+    public List<TShirt> getNew(){
+        ArrayList<TShirt> allTShirts= new ArrayList<>(findAll());
+        ArrayList<TShirt> newTShirts = new ArrayList<>();
+        for (int i = 1; i <= 5; i++){
+            newTShirts.add(allTShirts.get(allTShirts.size() - i));
+        }
+        return newTShirts;
     }
 
     public List<TShirt> findWithFilter(String inputSex, String inputtopic, String inputtag){
@@ -99,7 +109,6 @@ public class TShirtService {
         }else if (topic != null){
             tShirts = new ArrayList<>(tShirtRepository.findByTopic(topic));
         }
-
         if(tag != null){
 
             for(int i = 0; i < tShirts.size(); i++){
@@ -119,6 +128,16 @@ public class TShirtService {
             }
         }
         return tShirts;
+    }
+    public List<TShirt> getPopular() {
+        List<TShirt> tShirts = findAll();
+        Comparator<TShirt> comparator = Comparator.comparing(obj-> obj.getRating());
+        tShirts.sort(comparator);
+        ArrayList<TShirt> popularTShirts = new ArrayList<>();
+        for(int i = 1; i <= 5; i++){
+            popularTShirts.add(tShirts.get(tShirts.size() - i));
+        }
+        return popularTShirts;
     }
 }
 

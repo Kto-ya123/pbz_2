@@ -11,23 +11,28 @@ public class TShirt {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     @NotEmpty
     private String name;
 
-
     private String description;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "topic_id")
-    private Topic topic;
-
     @NotEmpty
     private String urlShirt;
 
     private double rating;
 
     private Sex sex;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tag_id")
+    List<Tag> tags;
 
     public String getName() {
         return name;
@@ -44,16 +49,6 @@ public class TShirt {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User author;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tag_id")
-    List<Tag> tags;
-
-
 
     public Sex getSex() {
         return sex;

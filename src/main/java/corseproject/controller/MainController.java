@@ -1,109 +1,46 @@
 package corseproject.controller;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import corseproject.domain.Message;
+import corseproject.domain.Comment;
+import corseproject.domain.TShirt;
+import corseproject.domain.Tag;
 import corseproject.domain.User;
-import corseproject.repos.*;
-import org.hibernate.Session;
+import corseproject.repos.CommentRepository;
+import corseproject.repos.TShirtRepository;
+import corseproject.repos.TagRepository;
+import corseproject.repos.UserRepository;
+import corseproject.service.TShirtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 @Controller
 public class MainController {
     @Autowired
-    private MessageRepository messageRepository;
+    private TagRepository tagRepository;
     @Autowired
-    private UserRepository userRepository;
+    private TShirtService tShirtService;
     @Autowired
     private TShirtRepository tShirtRepository;
     @Autowired
-    private TagRepository tagRepository;
-    @Autowired
-    private TopicRepository topicRepository;
-    @Autowired
     private CommentRepository commentRepository;
-
-    @Value("${upload.path}")
-    private String uploadPath;
-
-    @GetMapping("/main")
-    public String main(@RequestParam(required = false) String filter,  Model model){
-        Iterable<Message> messages = messageRepository.findAll();
-
-
-        if(filter != null && !filter.isEmpty()){
-            //messages = messageRepository.findByTag(filter);
-            User user = userRepository.findByUsername(filter);
-            messages = messageRepository.findByAuthor(user);
-        }else{
-            messages = messageRepository.findAll();
-        }
-        model.addAttribute("messages", messages);
-        model.addAttribute("filter", filter);
-        return "main";
-    }
-
-    @PostMapping("/main")
-    public String add(
-            @AuthenticationPrincipal User user,
-            @RequestParam String text,
-            @RequestParam String tag, Map<String, Object> model,
-            @RequestParam("file") MultipartFile file) throws IOException {
-
-        Message message = new Message();
-        if(file != null){
-            File uploadDir = new File(uploadPath);
-
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String uuidFile = UUID.randomUUID().toString();
-            String rezultFilename = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath + "/" + rezultFilename));
-            File uploadFile = new File(uploadPath + "/" + "image.png");
-            message.setFilename(rezultFilename);
-
-            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                    "cloud_name","itr",
-                    "api_key","224226883725776",
-                    "api_secret", "b1t0r9MrMI4YHq5oeCQs3avCsq4"));
-            Map uploadRezult = cloudinary.uploader().upload(uploadFile, ObjectUtils.emptyMap());
-            model.put("string", uploadRezult.get("secure_url").toString());
-
-
-        }
-        message.setText(text);
-        message.setTag(tag);
-        message.setAuthor(user);
-
-        messageRepository.save(message);
-
-        Iterable<Message> messages = messageRepository.findAll();
-        model.put("messages", messages);
-        return "main";
-    }
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/")
-    public  String greeting(Model model,
-                            @AuthenticationPrincipal User user)  {
-        if(user != null){
-            model.addAttribute("user", user);
-        }
+    public  String greeting(@AuthenticationPrincipal User authUser, Model model)  {
+        List<TShirt> tShirts = tShirtService.getNew();
+        List<TShirt> popularShirts = tShirtService.getPopular();
+        Iterable<Tag> tags = tagRepository.findAll();
+        tags.forEach(tag -> tag.setTagName(tag.getTagName().substring(1)));
+        model.addAttribute("tShirts", tShirts);
+        model.addAttribute("popular", popularShirts);
+        model.addAttribute("user", authUser);
+        model.addAttribute("tags", tags);
         return "greeting";
+
     }
 }

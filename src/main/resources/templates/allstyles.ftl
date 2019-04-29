@@ -29,6 +29,12 @@
         <input type="text" class="btn searchcolor" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" name="inputtag" id="tag">
         <button class="btn btn-outline-primary" type="submit">Search</button>
     </form>
+    <#if filter??>
+        <br>
+        <div>
+            <h5>Search by:${filter}</h5>
+        </div>
+    </#if>
 
 
     <div class="row">
@@ -84,7 +90,4 @@
         delimiter: /(,|;)\s*/,
         lookup: v
     });
-
-
-
 </script>

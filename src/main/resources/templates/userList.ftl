@@ -7,6 +7,7 @@
     <table  class="table table-hover ">
         <thead>
         <tr >
+            <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">E-Mail</th>
             <th scope="col">Role</th>
@@ -18,7 +19,7 @@
 <#list users as user>
 
     <tr scope="row">
-
+        <td scope="col">${user.id}</td>
         <td scope="col"> <a href="/user/${user.id}">${user.username}</a></td>
         <td scope="col"><#if user.email ??>${user.email}</#if></td>
         <td scope="col"><#list user.roles as role>${role}<#sep> , </#list></td>

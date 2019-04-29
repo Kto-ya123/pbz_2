@@ -3,9 +3,9 @@ package corseproject.controller;
 import corseproject.domain.Role;
 import corseproject.domain.TShirt;
 import corseproject.domain.User;
-import corseproject.repos.CommentRepository;
 import corseproject.repos.TShirtRepository;
 import corseproject.repos.UserRepository;
+import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +25,7 @@ public class PersonalPageController {
     @Autowired
     private TShirtRepository tShirtRepository;
     @Autowired
-    private CommentRepository commentRepository;
+    private UserService userService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -38,8 +38,7 @@ public class PersonalPageController {
                                @AuthenticationPrincipal User authUser,
                                @PathVariable String username){
         User user = userRepository.findByUsername(username);
-        if(!authUser.getUsername().equals(user.getUsername())
-        && !authUser.getRoles().contains(Role.ADMIN)){
+        if(!userService.getAccess(authUser, username)){
             return "redirect:/";
         }
 

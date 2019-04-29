@@ -9,6 +9,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String message;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
@@ -24,9 +26,6 @@ public class Comment {
     public void settShirt(TShirt tShirt) {
         this.tShirt = tShirt;
     }
-
-    private String message;
-
 
     public String getMessage() {
         return message;

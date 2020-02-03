@@ -1,9 +1,6 @@
 package corseproject.config;
 
-import corseproject.domain.Role;
-import corseproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,14 +17,12 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
-    @Autowired
-    private UserService userService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                     .antMatchers("/" , "/style/**", "/registration", "/reg", "/user","/user/**", "/userEdit", "/backet", "/TShirts/*", "/TShirts","/auto", "/activate/*", "/comment/getcomment/*", "/TShirts/*/backet").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
                 .and()
                     .formLogin()
                     .loginPage("/")
@@ -35,11 +30,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .permitAll();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-            .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }

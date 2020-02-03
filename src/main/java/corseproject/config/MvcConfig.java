@@ -13,6 +13,7 @@ public class MvcConfig implements WebMvcConfigurer {
     private String uploadPath;
     public void addViewControllers(ViewControllerRegistry registry) {
     }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/style/**")
@@ -21,5 +22,4 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///" + uploadPath + "/");
 
     }
-
 }
